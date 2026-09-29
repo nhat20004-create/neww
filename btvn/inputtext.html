@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BTVN</title>
+    <style>
+      label {
+        display: block;
+        font-size: 22px;
+        margin-bottom: 10px;
+      }
+
+      textarea,
+      input {
+        padding: 12px;
+        font-size: 18px;
+        color: #777;
+      }
+
+      .counter {
+        color: #d32f2f;
+        font-size: 20px;
+        margin-bottom: 25px;
+      }
+    </style>
+  </head>
+  <body>
+    <label for="textarea">Textarea</label>
+
+    <textarea id="textarea" maxlength="140" placeholder="jQueryScript.Net"></textarea>
+    <div class="counter">
+      Max
+      <span id="textareaCount">0</span>
+      / 140
+    </div>
+
+    <label for="inputField">Input Field</label>
+    <input type="text" id="inputField" maxlength="20" placeholder="jQueryScript.Net" />
+    <div class="counter">
+      Maximum
+      <span id="inputCount">0</span>
+      / 20
+    </div>
+    <script>
+      const textarea = document.getElementById("textarea");
+      const textareaCount = document.getElementById("textareaCount");
+
+      const inputField = document.getElementById("inputField");
+      const inputCount = document.getElementById("inputCount");
+
+      textarea.addEventListener("input", function () {
+        textareaCount.textContent = textarea.value.length;
+      });
+
+      inputField.addEventListener("input", function () {
+        inputCount.textContent = inputField.value.length;
+      });
+    </script>
+  </body>
+</html>
