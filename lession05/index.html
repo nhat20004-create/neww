@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 16px;
+        line-height: 1.6;
+      }
+
+      .demo-box {
+        border: 1px solid #ddd;
+        padding: 12px;
+      }
+      .demo-box button {
+        padding: 8px 14px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="demo-box">
+      <button type="button" id="btn-otp">Gửi OTP</button>
+    </div>
+
+    <script>
+      const nut = document.querySelector("#btn-otp");
+      nut.addEventListener("click", () => {
+        let conLai = 10; // so giây còn lại
+        nut.disabled = true; // vô hiệu hóa nút
+        nut.textContent = `Gửi lại sau ${conLai} s`; // cập nhật nội dung nút
+
+        const dem = setInterval(() => {
+          conLai--; // giảm 1 giây còn lại
+          nut.textContent = `Gửi lại sau ${conLai} s`; // cập nhật nội dung nút
+
+          if (conLai <= 0) {
+            clearInterval(dem); // dừng bộ đếm
+            nut.disabled = false; // kích hoạt lại nút
+            nut.textContent = "Gửi OTP"; // tra ve cho nội dung ban đầu
+          }
+        }, 1000); // chạy mỗi 1 giây
+      });
+    </script>
+  </body>
+</html>

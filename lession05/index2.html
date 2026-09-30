@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>bai thuc hanh</title>
+    <style>
+      body {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 16px;
+        line-height: 1.6;
+      }
+      .demo-box {
+        border: 1px solid #ddd;
+        padding: 12px;
+      }
+
+      .demo-box input {
+        padding: 6px 8px;
+        width: 200px;
+        max-width: 100%;
+      }
+
+      #ds {
+        list-style: none;
+        padding: 0;
+        margin: 10px 0 0;
+      }
+
+      #ds li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #ddd;
+        padding: 6px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="demo-box">
+      <form id="form">
+        <label for="o-ten">ten mon</label>
+        <input type="text" name="" id="o-ten" placeholder="VD: pizza" />
+        <button type="submit">them mon</button>
+      </form>
+      <ul id="ds"></ul>
+    </div>
+    <script>
+      const form = document.querySelector("#form");
+      const oTen = document.querySelector("#o-ten");
+      const ds = document.querySelector("#ds");
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault(); // khong de trang tai lai
+        const ten = oTen.value.trim();
+        if (ten === "") return; // ten rong se bo qua
+
+        // tao dong moi
+        const li = document.createElement("li");
+
+        const span = document.createElement("span");
+        span.textContent = ten;
+
+        const nutXoa = document.createElement("button");
+        nutXoa.type = "button";
+        nutXoa.textContent = "X";
+        nutXoa.addEventListener("click", () => {
+          li.remove(); // xoa dong chua nut
+        });
+
+        //ghep vao the li roi gan vao danh sach
+        li.append(span, nutXoa);
+        ds.append(li);
+
+        oTen.value = ""; // clear input
+        oTen.focus(); // san sang goi mon moi
+      });
+    </script>
+  </body>
+</html>
