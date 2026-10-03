@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Danh Sach Di cho</title>
+  </head>
+  <style>
+    body {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 16px;
+      line-height: 1.6;
+    }
+    .demo-box {
+      border: 1px solid #ddd;
+      padding: 12px;
+    }
+
+    .demo-box input {
+      padding: 6px 8px;
+      width: 200px;
+      max-width: 100%;
+    }
+
+    #ds {
+      list-style: none;
+      padding: 0;
+      margin: 10px 0 0;
+    }
+
+    #ds li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #ddd;
+      padding: 6px 0;
+    }
+
+    #ds li.da-mua span {
+      text-decoration: line-through;
+    }
+  </style>
+  <body>
+    <div class="demo-box">
+      <form id="form">
+        <label for="o-ten">Danh Sach Di Cho</label>
+        <input type="text" name="" id="o-ten" placeholder="VD: rau muong" />
+        <button type="submit">them vao danh sach</button>
+      </form>
+      <div id="thong-ke">0/0 mon chua mua</div>
+      <ul id="ds"></ul>
+    </div>
+  </body>
+  <script>
+    const form = document.querySelector("#form");
+    const oTen = document.querySelector("#o-ten");
+    const ds = document.querySelector("#ds");
+    const thongKe = document.querySelector("#thong-ke");
+
+    let danhSach = JSON.parse(localStorage.getItem("danhSach")) || [];
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault(); // khong de trang tai lai
+      const ten = oTen.value.trim();
+      if (ten === "") return; // ten rong se bo qua
+
+      // tao dong moi
+      const li = document.createElement("li");
+
+      const span = document.createElement("span");
+      span.textContent = ten;
+
+      let daMua = false; // chua mua
+
+      li.addEventListener("click", () => {
+        daMua = !daMua; // doi trang thai
+
+        if (daMua) {
+          li.classList.add("da-mua");
+        } else {
+          li.classList.remove("da-mua");
+        }
+        capNhatThongKe();
+      });
+
+      li.addEventListener("dblclick", () => {
+        li.remove(); // xoa dong chua nut2
+        capNhatThongKe();
+      });
+
+      li.append(span);
+      ds.append(li);
+
+      oTen.value = ""; // clear input
+      oTen.focus(); // san sang goi mon moi
+
+      capNhatThongKe();
+    });
+
+    function capNhatThongKe() {
+      const tong = ds.children.length;
+
+      let chuaMua = 0;
+
+      for (let i = 0; i < tong; i++) {
+        if (!ds.children[i].classList.contains("da-mua")) {
+          chuaMua++;
+        }
+      }
+
+      thongKe.textContent = `Con ${chuaMua}/${tong} mon chua mua`;
+    }
+  </script>
+</html>
