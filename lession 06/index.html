@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bài 6.1 - jQuery thêm/bớt HTML</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 600px;
+        margin: 40px auto;
+        padding: 0 16px;
+      }
+      input {
+        padding: 8px;
+        width: 60%;
+      }
+      button {
+        padding: 8px 12px;
+        cursor: pointer;
+        margin: 2px;
+      }
+      ul {
+        padding: 0;
+        list-style: none;
+      }
+      li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px;
+        border-bottom: 1px solid #ddd;
+      }
+      .btn-xoa {
+        background: #e74c3c;
+        color: #fff;
+        border: none;
+      }
+      .thong-bao {
+        color: #e74c3c;
+        min-height: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Danh sách sinh viên</h1>
+
+    <input type="text" id="txtTen" placeholder="Nhập tên sinh viên..." />
+    <p class="thong-bao" id="thongBao"></p>
+
+    <button id="btnThemCuoi">Thêm vào cuối</button>
+    <button id="btnThemDau">Thêm vào đầu</button>
+    <button id="btnXoaCuoi">Xóa người cuối</button>
+    <button id="btnXoaTatCa">Xóa tất cả</button>
+
+    <p>
+      Tổng số:
+      <b id="tongSo">0</b>
+      sinh viên
+    </p>
+
+    <ul id="danhSach"></ul>
+
+    <!-- Nhúng thư viện jQuery từ CDN -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+      // $(function () { ... }) : chạy code khi trang đã tải xong
+      $(function () {
+        // Tạo 1 thẻ <li> mới từ tên sinh viên
+
+        //testx`
+        // $("h1").text("asdasdsa");
+        // $("#btnXoaTatCa").text("asdkasdasdasd");
+        // $("h1").css("color", "red");
+        // $(".btn-xoa").css("background", "red");
+        // $("#btnThemCuoi").mouseenter(function () {
+        //   $(this).css("background", "none");
+        // });
+        // $("#btnThemCuoi").mouseleave(function () {
+        //   $(this).css("background", "red");
+        // });
+
+        function taoMuc(ten) {
+          var $li = $("<li></li>"); // tạo thẻ mới
+          $li.append($("<span></span>").text(ten)); // .text() để tránh chèn mã HTML lạ
+          $li.append('<button class="btn-xoa">Xóa</button>');
+          return $li;
+        }
+        // Đếm lại số <li> và hiển thị
+        function capNhatTongSo() {
+          $("#tongSo").text($("#danhSach li").length);
+        }
+
+        // Lấy tên từ ô input, kiểm tra rỗng
+        function layTen() {
+          var ten = $("#txtTen").val().trim(); // .val() lấy giá trị input
+          if (ten === "") {
+            $("#thongBao").text("Vui lòng nhập tên!");
+            return null;
+          }
+          $("#thongBao").text("");
+          $("#txtTen").val("").focus(); // xóa ô input sau khi thêm
+          return ten;
+        }
+
+        // 1. append(): thêm vào CUỐI danh sách
+        $("#btnThemCuoi").click(function () {
+          var ten = layTen();
+          if (ten) {
+            $("#danhSach").append(taoMuc(ten));
+            capNhatTongSo();
+          }
+          // $(".btn-xoa").css("background", "blue");
+        });
+
+        // 2. prepend(): thêm vào ĐẦU danh sách
+        $("#btnThemDau").click(function () {
+          var ten = layTen();
+          if (ten) {
+            $("#danhSach").prepend(taoMuc(ten));
+            capNhatTongSo();
+          }
+        });
+
+        // 3. remove(): xóa phần tử <li> cuối cùng
+        $("#btnXoaCuoi").click(function () {
+          $("#danhSach li:last").remove();
+          capNhatTongSo();
+        });
+
+        // 4. empty(): xóa toàn bộ nội dung bên trong <ul>
+        $("#btnXoaTatCa").click(function () {
+          $("#danhSach").empty();
+          capNhatTongSo();
+        });
+
+        // 5. Xóa từng sinh viên.
+        // Nút "Xóa" được tạo SAU khi trang tải nên phải dùng .on() gắn vào thẻ cha (#danhSach)
+        $("#danhSach").on("click", ".btn-xoa", function () {
+          $(this).parent().remove(); // $(this) là nút vừa bấm, .parent() là thẻ <li>
+          capNhatTongSo();
+        });
+
+        // Bấm Enter trong ô input = bấm "Thêm vào cuối"
+        $("#txtTen").keypress(function (e) {
+          if (e.which === 13) {
+            $("#btnThemCuoi").click();
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

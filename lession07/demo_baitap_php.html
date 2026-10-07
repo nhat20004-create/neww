@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bài tập PHP</title>
+<style>
+  :root {
+    --bg: #f7f7f5;
+    --surface: #ffffff;
+    --text: #1f2328;
+    --muted: #5b6370;
+    --border: #e2e4e8;
+    --accent: #4f5bd5;
+    --accent-soft: #eef0fc;
+    --code-bg: #f3f4f6;
+    --console-bg: #1e2230;
+    --console-text: #d7dce5;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #15171c;
+      --surface: #1d2027;
+      --text: #e6e8eb;
+      --muted: #9aa2ae;
+      --border: #2e323b;
+      --accent: #8f98f0;
+      --accent-soft: #262a40;
+      --code-bg: #252932;
+      --console-bg: #0f1116;
+      --console-text: #d7dce5;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #15171c;
+    --surface: #1d2027;
+    --text: #e6e8eb;
+    --muted: #9aa2ae;
+    --border: #2e323b;
+    --accent: #8f98f0;
+    --accent-soft: #262a40;
+    --code-bg: #252932;
+    --console-bg: #0f1116;
+    --console-text: #d7dce5;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 16px/1.65 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  main { max-width: 780px; margin: 0 auto; padding: 40px 16px 64px; }
+
+  header { margin-bottom: 32px; }
+  header h1 { margin: 0 0 6px; font-size: 28px; line-height: 1.25; }
+  header p { margin: 0; color: var(--muted); }
+
+  nav.toc { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+  nav.toc a {
+    text-decoration: none; color: var(--accent);
+    background: var(--accent-soft);
+    padding: 4px 12px; border-radius: 999px; font-size: 14px;
+  }
+
+  section.exercise {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+  .ex-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 8px; }
+  .ex-head h2 { margin: 0; font-size: 21px; }
+  .tag {
+    font-size: 12px; color: var(--muted);
+    border: 1px solid var(--border); border-radius: 999px; padding: 1px 10px;
+  }
+  .lead { margin: 0 0 16px; }
+
+  h3 {
+    font-size: 13px; text-transform: uppercase; letter-spacing: .06em;
+    color: var(--muted); margin: 20px 0 8px;
+  }
+
+  ul, ol { margin: 0; padding-left: 22px; }
+  li { margin: 4px 0; }
+
+  table.given { border-collapse: collapse; width: 100%; font-size: 15px; }
+  table.given th, table.given td {
+    text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--border);
+  }
+  table.given th { color: var(--muted); font-weight: 500; width: 40%; }
+  table.given tr:last-child th, table.given tr:last-child td { border-bottom: 0; }
+
+  code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+  code { background: var(--code-bg); padding: 1px 6px; border-radius: 4px; font-size: .92em; }
+  pre {
+    margin: 0; padding: 14px 16px; border-radius: 8px;
+    overflow-x: auto; font-size: 14px; line-height: 1.55;
+  }
+  pre.php { background: var(--code-bg); }
+  pre.console { background: var(--console-bg); color: var(--console-text); }
+  .console-label { font-size: 12px; color: var(--muted); margin: 0 0 6px; }
+
+  .note {
+    margin-top: 12px; padding: 10px 14px; border-left: 3px solid var(--accent);
+    background: var(--accent-soft); border-radius: 0 6px 6px 0; font-size: 15px;
+  }
+
+  footer { color: var(--muted); font-size: 14px; text-align: center; margin-top: 32px; }
+
+  @media print {
+    body { background: #fff; color: #000; }
+    nav.toc { display: none; }
+    section.exercise { break-inside: avoid; border-color: #ccc; }
+    pre.console { background: #f3f3f3; color: #000; border: 1px solid #ccc; }
+  }
+</style>
+</head>
+<body>
+<main>
+
+  <header>
+    <h1>Bài tập thực hành PHP</h1>
+    <p>Gồm 4 bài, từ khai báo biến, câu lệnh điều kiện, vòng lặp đến chia chương trình thành function. Mỗi bài viết thành một file <code>.php</code> riêng và chạy được trên terminal hoặc trình duyệt.</p>
+    <nav class="toc">
+      <a href="#bai-1">Bài 1 · Tính tiền đơn hàng</a>
+      <a href="#bai-2">Bài 2 · Xếp loại học viên</a>
+      <a href="#bai-3">Bài 3 · Danh sách sản phẩm</a>
+      <a href="#bai-4">Bài 4 · Chia thành function</a>
+    </nav>
+  </header>
+
+  <!-- ===== BÀI 1 ===== -->
+  <section class="exercise" id="bai-1">
+    <div class="ex-head">
+      <h2>Bài 1: Tính tổng tiền đơn hàng</h2>
+      <span class="tag">Biến · Phép tính</span>
+    </div>
+    <p class="lead">Viết chương trình PHP tính tổng tiền một đơn hàng.</p>
+
+    <h3>Dữ liệu cho trước</h3>
+    <table class="given">
+      <tr><th>Tên sản phẩm</th><td>"Bánh mì"</td></tr>
+      <tr><th>Đơn giá</th><td>15000</td></tr>
+      <tr><th>Số lượng</th><td>3</td></tr>
+    </table>
+
+    <h3>Yêu cầu</h3>
+    <ol>
+      <li>Khai báo các biến tương ứng.</li>
+      <li>Tính thành tiền.</li>
+      <li>Tính VAT 10%.</li>
+      <li>Tính tổng tiền phải trả.</li>
+      <li>In kết quả ra màn hình / terminal / console.</li>
+    </ol>
+  </section>
+
+  <!-- ===== BÀI 2 ===== -->
+  <section class="exercise" id="bai-2">
+    <div class="ex-head">
+      <h2>Bài 2: Đánh giá kết quả học viên</h2>
+      <span class="tag">if / elseif / else</span>
+    </div>
+    <p class="lead">Viết chương trình đánh giá kết quả của một học viên.</p>
+
+    <h3>Dữ liệu cho trước</h3>
+<pre class="php">$name = "Nguyen Van An";
+$score = 7.5;</pre>
+
+    <h3>Yêu cầu: xếp loại</h3>
+    <table class="given">
+      <tr><th>Điểm từ 8 trở lên</th><td>Giỏi</td></tr>
+      <tr><th>Từ 6.5 đến dưới 8</th><td>Khá</td></tr>
+      <tr><th>Từ 5 đến dưới 6.5</th><td>Trung bình</td></tr>
+      <tr><th>Dưới 5</th><td>Không đạt</td></tr>
+    </table>
+
+    <h3>Ngoài ra: thông báo kết quả</h3>
+    <ul>
+      <li>Nếu điểm <code>&gt;= 5</code> → thông báo <strong>"Bạn đã đạt"</strong></li>
+      <li>Nếu điểm <code>&lt; 5</code> → thông báo <strong>"Bạn chưa đạt"</strong></li>
+    </ul>
+
+    <h3>Kết quả mong đợi</h3>
+    <p class="console-label">Output</p>
+<pre class="console">Học viên: Nguyen Van An
+Điểm: 7.5
+Xếp loại: Khá
+Kết quả: Bạn đã đạt</pre>
+  </section>
+
+  <!-- ===== BÀI 3 ===== -->
+  <section class="exercise" id="bai-3">
+    <div class="ex-head">
+      <h2>Bài 3: Danh sách sản phẩm</h2>
+      <span class="tag">Mảng · foreach · Điều kiện</span>
+    </div>
+    <p class="lead">Cho danh sách sản phẩm:</p>
+
+<pre class="php">$products = [
+    [
+        "name" =&gt; "Bánh mì",
+        "price" =&gt; 15000,
+        "quantity" =&gt; 2
+    ],
+    [
+        "name" =&gt; "Sữa",
+        "price" =&gt; 30000,
+        "quantity" =&gt; 1
+    ],
+    [
+        "name" =&gt; "Trứng",
+        "price" =&gt; 25000,
+        "quantity" =&gt; 3
+    ]
+];</pre>
+
+    <h3>Yêu cầu</h3>
+    <ol>
+      <li>Duyệt qua danh sách sản phẩm bằng <code>foreach</code>.</li>
+      <li>In tên, đơn giá và số lượng của từng sản phẩm.</li>
+      <li>Tính thành tiền của từng sản phẩm: <code>thành tiền = price × quantity</code></li>
+      <li>Tính tổng tiền của toàn bộ đơn hàng.</li>
+      <li>Nếu tổng tiền <code>&gt;= 100000</code> thì giảm giá 10%.</li>
+      <li>Nếu tổng tiền <code>&lt; 100000</code> thì không giảm giá.</li>
+      <li>In ra kết quả theo mẫu bên dưới.</li>
+    </ol>
+
+    <h3>Kết quả mong đợi</h3>
+    <p class="console-label">Output</p>
+<pre class="console">===== DANH SÁCH SẢN PHẨM =====
+
+Bánh mì - 15,000 VNĐ x 2 = 30,000 VNĐ
+Sữa - 30,000 VNĐ x 1 = 30,000 VNĐ
+Trứng - 25,000 VNĐ x 3 = 75,000 VNĐ
+
+Tạm tính: 135,000 VNĐ
+Giảm giá: 13,500 VNĐ
+Thanh toán: 121,500 VNĐ</pre>
+  </section>
+
+  <!-- ===== BÀI 4 ===== -->
+  <section class="exercise" id="bai-4">
+    <div class="ex-head">
+      <h2>Bài 4 (Thực hành 7-4): Chia file PHP thành các function con</h2>
+      <span class="tag">function · tham số · return</span>
+    </div>
+    <p class="lead">Viết lại chương trình của <a href="#bai-3">Bài 3</a>: tách code thành các function con, mỗi function làm một việc. Giữ nguyên dữ liệu <code>$products</code> và kết quả in ra.</p>
+
+    <h3>Yêu cầu</h3>
+    <ol>
+      <li>Giữ nguyên mảng <code>$products</code> như Bài 3.</li>
+      <li>Viết tối thiểu các function sau:
+        <table class="given" style="margin-top:8px">
+          <tr><th><code>formatMoney($amount)</code></th><td>Trả về chuỗi tiền đã định dạng, ví dụ <code>15000</code> → <code>"15,000 VNĐ"</code></td></tr>
+          <tr><th><code>calculateLineTotal($product)</code></th><td>Trả về thành tiền của 1 sản phẩm (<code>price × quantity</code>)</td></tr>
+          <tr><th><code>calculateSubtotal($products)</code></th><td>Trả về tổng tiền của toàn bộ đơn hàng</td></tr>
+          <tr><th><code>calculateDiscount($subtotal)</code></th><td>Trả về số tiền giảm: 10% nếu <code>&gt;= 100000</code>, ngược lại trả về <code>0</code></td></tr>
+          <tr><th><code>printProductList($products)</code></th><td>In tiêu đề và từng dòng sản phẩm</td></tr>
+          <tr><th><code>printSummary($products)</code></th><td>In Tạm tính, Giảm giá, Thanh toán</td></tr>
+        </table>
+      </li>
+      <li>Các function tính toán (<code>calculate…</code>, <code>formatMoney</code>) phải dùng <code>return</code> để trả kết quả, <strong>không</strong> được <code>echo</code> bên trong.</li>
+      <li>Không dùng biến toàn cục (<code>global</code>) — dữ liệu truyền vào qua tham số.</li>
+      <li>Function in kết quả phải gọi lại các function tính toán, không tính lại bằng code lặp.</li>
+      <li>Phần chương trình chính chỉ gồm khai báo <code>$products</code> và gọi 2 function in:
+<pre class="php" style="margin-top:8px">printProductList($products);
+printSummary($products);</pre>
+      </li>
+    </ol>
+
+    <h3>Kết quả mong đợi</h3>
+    <p>Giống hệt kết quả của Bài 3:</p>
+    <p class="console-label">Output</p>
+<pre class="console">===== DANH SÁCH SẢN PHẨM =====
+
+Bánh mì - 15,000 VNĐ x 2 = 30,000 VNĐ
+Sữa - 30,000 VNĐ x 1 = 30,000 VNĐ
+Trứng - 25,000 VNĐ x 3 = 75,000 VNĐ
+
+Tạm tính: 135,000 VNĐ
+Giảm giá: 13,500 VNĐ
+Thanh toán: 121,500 VNĐ</pre>
+
+    <h3>Mở rộng (không bắt buộc)</h3>
+    <ul>
+      <li>Tách các function sang file <code>functions.php</code>, file chính <code>index.php</code> dùng <code>require_once 'functions.php';</code> để gọi.</li>
+      <li>Đổi <code>quantity</code> của "Trứng" thành <code>1</code> rồi chạy lại: tổng còn 85,000 VNĐ (dưới 100,000), nên dòng Giảm giá phải là <code>0 VNĐ</code>.</li>
+    </ul>
+  </section>
+
+  <footer>Chúc các bạn làm bài tốt!</footer>
+</main>
+</body>
+</html>
