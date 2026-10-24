@@ -11,7 +11,7 @@ $loi = "";
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $username = trim($_POST["username"] ?? "");
     $password = $_POST["password"] ?? "";
-
+//sql injection prevention: use prepared statements : '1 OR '1'='1 -- 
     $stmt = $pdo->prepare("SELECT * FROM `admin` WHERE username = ?");
     $stmt->execute([$username]);
     $admin = $stmt->fetch();
