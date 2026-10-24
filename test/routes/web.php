@@ -14,3 +14,5 @@ Route::get('/bootstrap', [HomeController::class, 'bootstrap']);
 Route::post('/bootstrap', [HomeController::class, 'create']);
 
 Route::get('/posts/{id}', [PostController::class, 'show']);
+
+Route::get('/blog', [HomeController::class, 'blog']);
