@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePost;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Support\Str;
+use Faker\Core\Uuid;
 
 class PostController extends Controller
 {
     // lấy tất cả 
     public function index() {
-        $posts = Post::all(); // DB::table('posts')->where('title', 'like', '%Laravel%')->get();
+        $posts = Post::with('user')->get();
         return view('post_index', ['posts' => $posts]);
     }
 
@@ -26,12 +29,17 @@ class PostController extends Controller
         return view('post_create');
     }
 
-    public function store(Request $request) {
+    public function store(StorePost $request) {
         $post = new Post();
+
+        $file = $request->file('image_file');
+        $file_name = date('Ymd') . random_int(10000, 10000000) . '.' . $file->getClientOriginalExtension();
+        $file->move('upload', $file_name); // /upload/{{ filename }}
         $post->user_id = 2;
         $post->slug = Str::slug($request->title);
-        $post->title = $request->title;
-        $post->content = $request->content;
+        $post->title = $request->title ?? 'default';
+        $post->content = $request->content ?? 'default';
+        $post->file_path = 'upload/' . $file_name;
         $post->save();
         return redirect()->route('post.index');
     }
@@ -52,8 +60,12 @@ class PostController extends Controller
     }
 
     public function destroy($id) {
-        $post = Post::find($id);
-        $post->delete();
+        $post = Post::withTrashed()->find($id);
+        if ($post->trashed()) {
+            $post->forceDelete();
+        } else {
+            $post->delete();
+        }
         return redirect()->route('post.index');
     }
 }
