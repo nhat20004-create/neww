@@ -1,4 +1,3 @@
-
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -15,9 +14,11 @@ return new class extends Migration
                   ->constrained('users')
                   ->cascadeOnDelete();
 
-            $table->string('slug', 50)->nullable();
-            $table->string('title', 50)->nullable();
+            $table->string('slug')->nullable();
+            $table->string('title');
+            $table->string('category', 50)->nullable();
             $table->text('content');
+            $table->string('file_path')->nullable();
             $table->timestamps();
         });
     }

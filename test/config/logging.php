@@ -52,6 +52,15 @@ return [
 
     'channels' => [
 
+        // Log riêng cho sự kiện tài khoản: đăng ký, đăng nhập, đổi mật khẩu
+        'auth' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/auth.log'),
+            'level' => 'info',
+            'days' => 30,
+            'replace_placeholders' => true,
+        ],
+
         'stack' => [
             'driver' => 'stack',
             'channels' => explode(',', (string) env('LOG_STACK', 'single')),

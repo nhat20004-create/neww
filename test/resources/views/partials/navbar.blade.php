@@ -1,5 +1,5 @@
 <header class="bg-white text-center py-4">
-    <a href="{{ url('/blog') }}" class="brand text-decoration-none">
+    <a href="{{ route('blog') }}" class="brand text-decoration-none">
         GÓC NHÌN
     </a>
 
@@ -20,17 +20,41 @@
         <div class="collapse navbar-collapse" id="mainMenu">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/blog') }}">Trang chủ</a>
+                    <a class="nav-link" href="{{ route('blog') }}">Trang chủ</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#cong-nghe">Công nghệ</a>
+                    <a class="nav-link" href="{{ route('blog', ['category' => 'Công nghệ']) }}">Công nghệ</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#hoc-tap">Học tập</a>
+                    <a class="nav-link" href="{{ route('blog', ['category' => 'Học tập']) }}">Học tập</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#doi-song">Đời sống</a>
+                    <a class="nav-link" href="{{ route('blog', ['category' => 'Đời sống']) }}">Đời sống</a>
                 </li>
+            </ul>
+
+            <ul class="navbar-nav ml-auto">
+                @auth
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('posts.create') }}">Viết bài</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('password.change') }}">Xin chào, {{ auth()->user()->name }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <form action="{{ route('logout') }}" method="post" class="d-inline">
+                            @csrf
+                            <button type="submit" class="btn btn-link nav-link" style="border:0;">Đăng xuất</button>
+                        </form>
+                    </li>
+                @else
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('login') }}">Đăng nhập</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('register') }}">Đăng ký</a>
+                    </li>
+                @endauth
             </ul>
         </div>
     </div>
