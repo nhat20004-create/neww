@@ -13,6 +13,7 @@ use Illuminate\Queue\SerializesModels;
 class VerifyEmail extends Mailable 
 {
     use Queueable, SerializesModels;
+    protected $username = 'sa31283791asd';
 
     /**
      * Create a new message instance.
@@ -28,7 +29,7 @@ class VerifyEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Verify Email',
+            subject: 'Verify Email >> Hello ' . $this->username,
         );
     }
 

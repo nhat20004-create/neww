@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\VerifyEmail;
+use App\Jobs\SendEmailJob;
 
 Route::get('/', function () {
     return view('welcome');
@@ -22,8 +23,14 @@ Route::get('mail',function(){
     return 'Email sent';
 });
 
-Route::get('notify',function(){
-    $user = User::find(1);
-    $user->notify(new VerifyEmailnoti('Nhật'));
+// Route::get('notify',function(){
+//     $user = User::find(1);
+//     $user->notify(new VerifyEmailnoti('Nhật'));
+//     return 'Notification sent';
+// });
+
+Route::get('/mail', function(){
+    SendEmailJob::dispatchAfterResponse();
+
     return 'Notification sent';
 });
